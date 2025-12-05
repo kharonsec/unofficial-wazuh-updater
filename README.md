@@ -44,7 +44,7 @@ Based on the [official Wazuh upgrade documentation](https://documentation.wazuh.
 
 ```bash
 # Download the script
-curl -sO https://raw.githubusercontent.com/<your-username>/<repo-name>/main/wazuh-upgrade.sh
+curl -sO https://raw.githubusercontent.com/kharonsec/unofficial-wazuh-updater/main/wazuh-upgrade.sh
 
 # Make it executable
 chmod +x wazuh-upgrade.sh
@@ -197,7 +197,7 @@ The upgrade may reset the dashboard port or SSL certificate paths. Check:
 
 ```bash
 # Check what port dashboard is listening on
-sudo ss -tlnp | grep -E "node|5601|443"
+sudo ss -tlnp | grep -E "node|443"
 
 # Check SSL certificate configuration
 sudo grep -E "server.ssl|server.port" /etc/wazuh-dashboard/opensearch_dashboards.yml
@@ -209,12 +209,13 @@ sudo journalctl -u wazuh-dashboard -n 50 --no-pager
 Common fixes:
 
 ```bash
-# Fix certificate paths (if using default cert names)
-sudo sed -i 's|dashboard-key.pem|wazuh-dashboard-key.pem|' /etc/wazuh-dashboard/opensearch_dashboards.yml
-sudo sed -i 's|dashboard.pem|wazuh-dashboard.pem|' /etc/wazuh-dashboard/opensearch_dashboards.yml
+# Fix certificate paths (if filenames don't match config)
+# Check actual cert names: ls /etc/wazuh-dashboard/certs/
+# Then update config to match:
+sudo nano /etc/wazuh-dashboard/opensearch_dashboards.yml
 
 # Set specific port
-sudo sed -i 's/^server.port:.*/server.port: 5601/' /etc/wazuh-dashboard/opensearch_dashboards.yml
+sudo sed -i 's/^server.port:.*/server.port: 443/' /etc/wazuh-dashboard/opensearch_dashboards.yml
 
 # Restart dashboard
 sudo systemctl restart wazuh-dashboard

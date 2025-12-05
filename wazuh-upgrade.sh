@@ -8,7 +8,8 @@
 # Based on official Wazuh documentation:
 # https://documentation.wazuh.com/current/upgrade-guide/upgrading-central-components.html
 #
-# Author: Generated for Eliott
+# Author: kharonsec
+# Repository: https://github.com/kharonsec/unofficial-wazuh-updater
 # Tested on: Ubuntu/Debian and RHEL-compatible systems
 #
 # IMPORTANT: 
